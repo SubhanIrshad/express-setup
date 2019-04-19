@@ -4,8 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "setup":
+      "mkdir ./bin && mkdir ./bin/prod && mkdir ./bin/prod/client && mkdir ./bin/prod/src",
+    "start":
+      "npm run clean && babel src -d ./bin/prod/src --source-maps inline && clear && npm run serve",
+    "clean": "rm -r ./bin/prod/src",
+    "reset": "rm -r ./bin",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "npm run clean && babel src -d ./bin/prod/src",
+    "prod": "npm run reset && npm run setup && npm run build && npm run start",
+    "serve": "node ./bin/prod/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +22,9 @@
     "express": "^4.16.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/plugin-transform-async-to-generator": "^7.2.0",
-    "@babel/preset-env": "^7.3.1",
-    "babel-plugin-transform-class-properties": "^6.24.1"
+    "@babel/preset-env": "^7.3.1"
   }
 }
